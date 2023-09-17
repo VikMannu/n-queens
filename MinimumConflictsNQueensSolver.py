@@ -1,12 +1,18 @@
 import random
 import time
+from datetime import datetime
 from collections import Counter
+import pandas as pd
 
 
 class MinimumConflictsNQueensSolver:
-    def __init__(self, N, max_attempts=10, max_time=2):
+    def __init__(self, N, growth_interval, number_of_iterations, max_attempts=100, max_time=5):
         self.N = N
+        self.growth_interval = growth_interval
+        self.number_of_iterations = number_of_iterations
         self.board = list(range(self.N))
+        self.expanded_nodes = 0
+        self.data = []
         self.max_attempts = max_attempts
         self.max_time = max_time
 
@@ -49,13 +55,13 @@ class MinimumConflictsNQueensSolver:
         random.shuffle(self.board)
 
     def solve(self):
+        self.board = list(range(self.N))
         while not self.is_valid_board():
             self.random_board()
             attempts = 0
             start_time = time.time()
-            print("Initial Board")
-            self.print_board()
             while attempts < self.max_attempts or time.time() - start_time <= self.max_time:
+                self.expanded_nodes += 1
                 conflicts_reparations = self.calculate_conflicts_reparations()
                 if conflicts_reparations is None:
                     return  # No conflicts to repair
@@ -65,6 +71,27 @@ class MinimumConflictsNQueensSolver:
                     return
                 attempts += 1
 
+    def test(self):
+        for _ in range(self.number_of_iterations):
+            self.expanded_nodes = 0
+            start_time = time.time()
+            self.solve()
+            end_time = time.time()
+            # Convierte los timestamps en objetos datetime
+            start_time_datetime = datetime.fromtimestamp(start_time)
+            end_time_datetime = datetime.fromtimestamp(end_time)
+            iteration_data = {
+                "N": self.N,
+                "start_time": start_time_datetime.strftime('%Y-%m-%d %H:%M:%S'),
+                "end_time": end_time_datetime.strftime('%Y-%m-%d %H:%M:%S'),
+                "duration(s)": end_time - start_time,
+                "expanded_nodes": self.expanded_nodes
+            }
+            self.data.append(iteration_data)
+            self.N += self.growth_interval
+
+        self.print_table()
+
     def print_board(self):
         if self.board is None:
             print("No solution found.")
@@ -72,10 +99,16 @@ class MinimumConflictsNQueensSolver:
         for row in range(self.N):
             print(" ".join("Q" if self.board[row] == col else "." for col in range(self.N)))
 
+    def print_table(self):
+        df = pd.DataFrame(self.data)
+
+        # Print DataFrame
+        print(df)
+
 
 if __name__ == "__main__":
     N = 8  # Change N according to the desired board size
-    solver = MinimumConflictsNQueensSolver(N)
-    solver.solve()
-    print("Solved Board")
-    solver.print_board()
+    growth_interval = 16
+    number_of_iterations = 10
+    solver = MinimumConflictsNQueensSolver(N, growth_interval, number_of_iterations)
+    solver.test()
