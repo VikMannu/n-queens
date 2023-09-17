@@ -13,8 +13,8 @@ class MinimumConflictsNQueensSolver:
         self.board = list(range(self.N))
         self.expanded_nodes = 0
         self.data = []
-        self.max_attempts = max_attempts
-        self.max_time = max_time
+        self.max_node_expansion_attempts = max_attempts
+        self.max_node_expansion_time = max_time
 
     def calculate_conflicts_reparations(self):
         conflicts_reparations = []
@@ -62,7 +62,7 @@ class MinimumConflictsNQueensSolver:
             self.print_board()
             attempts = 0
             start_time = time.time()
-            while attempts < self.max_attempts or time.time() - start_time <= self.max_time:
+            while attempts < self.max_node_expansion_attempts or time.time() - start_time <= self.max_node_expansion_time:
                 self.expanded_nodes += 1
                 conflicts_reparations = self.calculate_conflicts_reparations()
                 if conflicts_reparations is not None:
