@@ -109,6 +109,6 @@ class MinimumConflictsNQueensSolver:
 if __name__ == "__main__":
     N = 8  # Change N according to the desired board size
     growth_interval = 16
-    number_of_iterations = 10
+    number_of_iterations = 5
     solver = MinimumConflictsNQueensSolver(N, growth_interval, number_of_iterations)
     solver.test()
