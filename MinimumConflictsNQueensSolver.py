@@ -5,7 +5,6 @@ from collections import Counter
 
 class MinimumConflictsNQueensSolver:
     def __init__(self, N, max_attempts=10, max_time=2):
-        self.conflicts = None
         self.N = N
         self.board = list(range(self.N))
         self.max_attempts = max_attempts
