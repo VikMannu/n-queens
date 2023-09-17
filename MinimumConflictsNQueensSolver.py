@@ -77,7 +77,7 @@ class MinimumConflictsNQueensSolver:
             start_time = time.time()
             self.solve()
             end_time = time.time()
-            # Convierte los timestamps en objetos datetime
+            # Convert timestamps to datetime objects
             start_time_datetime = datetime.fromtimestamp(start_time)
             end_time_datetime = datetime.fromtimestamp(end_time)
             iteration_data = {
