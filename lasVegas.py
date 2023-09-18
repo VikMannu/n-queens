@@ -11,14 +11,15 @@ columns = domain = []
 
 #tamanho
 tam=0
-graficar=0
+drawTable=0
 #variable contador de nodos expandidos
 cantNodes=0
 
+#funcion para las soluciones
 def printSolution(solution,tam):
-    global graficar
+    global drawTable
     print(solution)
-    if graficar == 1:
+    if drawTable == 1:
         for x in range(tam):
             for i in range(tam):
                 if solution[i] == x+1:
@@ -31,7 +32,6 @@ def printSolution(solution,tam):
 def initArrays():
     global tam, domain, columns
     #inicializamos las columnas con valores por defecto
-
     domain = list(range(1, tam+1))
     columns = []
 
@@ -43,15 +43,13 @@ def readData():
     sys.setrecursionlimit(2000)
 
     print("Tiempo maximo de espera (s): ")
-    enter=input()
-    maxTime=float(enter)
+    maxTime=float(input())
 
     print("Tiempo maximo de espera entre iteraciones (s): ")
-    enter=input()
-    iterationTime = float(enter)
+    iterationTime = float(input())
 
-    print("Desea graficar la solucion encontrada? \n1. Si \n2. No")
-    graficar = int(input())
+    print("Desea dibujar la solucion encontrada? \n1. Si \n2. No")
+    drawTable = int(input())
 
 
 def calculatePositions():
