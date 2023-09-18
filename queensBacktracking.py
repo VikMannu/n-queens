@@ -1,6 +1,5 @@
 import time
 from art import *
-from simple_term_menu import TerminalMenu
 from tabulate import tabulate
 import os
 from colorama import Fore, Back, Style
@@ -70,13 +69,15 @@ def main():
         print("Please insert a number greater than 0")
         n = int(input())
 
-    solutions = ["[1] First Solution", "[2] All Solutions"]
-
-    terminal_menu = TerminalMenu(solutions, title="How many solutions do you want to find?")
-    optionSelected = terminal_menu.show()
+    print("How many solutions do you want to find?")
+    print("0 : First Solution \n1: All solutions")
+    option = int(input())
+    while(option != 0 and option != 1):
+        print("Please select a valid option")
+        option = int(input())
     
     print(Fore.WHITE,"Running Backtracking :\')")
-    initMainVariables(n, optionSelected)
+    initMainVariables(n, option)
 
 def initMainVariables(queenNumber, solutions):
     #  define all vars
